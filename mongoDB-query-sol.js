@@ -28,18 +28,13 @@ db.product.find({}, { _id: 0, product_name: 1, product_material: 1 })
 db.product.find({ product_material: "Soft" }).pretty();
 
 // 9. Find products which contain product color indigo  and product price 492.00
-db.product.find({ $or: [{ product_color: "indigo" }, { product_price: 492.00 }] }) 
+db.product.find({ $or: [{ product_color: "indigo" }, { product_price: 492.00 }] })
 
 // 10. Delete the products which product price value are same
+db.product.deleteMany({ product_price: 36 });
 
 
 
 
-
-db.product.find({ product_color: "indigo" }).pretty();  //10 ✅
-db.product.find({ product_price: 492.00 }).pretty();  //10 ✅
-
-
-db.product.aggregate([{$group:{"_id":"$product_price","product_price":{$first:"$product_price"},"count":{$sum:1}}},{$match:{"count":{$gt:1}}},{$project:{"name":1,"_id":0}},{$group:{"_id":null,"duplicateNames":{$push:"$product_price"}}},{$project:{"_id":0,"duplicateNames":1}}])
 
 
