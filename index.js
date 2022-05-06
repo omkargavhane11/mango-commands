@@ -45,10 +45,21 @@ app.get('/', function (req, res) {
   res.send('Hello World')
 })
 
-app.get('/movies', function (req, res) {
-    res.send(movies)
-  })
+// app.get('/movies', function (req, res) {
+//     res.send(movies)
+//   })
 
+// filtering movies based on rating 
+app.get('/movies', function (req, res) {
+    const {rating} = req.params;
+    console.log(req.query);
+    const movie = movies.filter((mv)=> mv.rating == rating)
+    rating ? res.send(rating) : res.status(404).send({msg : "not found"});
+    res.send(movies)
+  }) 
+
+
+//finding a specific movie
 app.get('/movies/:id', function (req, res) {
     const {id} = req.params;
     // console.log(id);
