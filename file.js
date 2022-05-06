@@ -79,10 +79,16 @@ const { arrayBuffer } = require("stream/consumers");
 // });
 
 
-    
+
 
 //session end task ❓
 // delete all files in backup folder
 
-// ⭐
+fs.readdir("./backup", (err, files) => {
+    files.forEach((fileName) => {
+        fs.unlink(`./backup/${fileName}`, (err) => {
+            console.log("deleted successfully")
+        });
+    });
+});
 
