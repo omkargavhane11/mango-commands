@@ -15,9 +15,9 @@ app.get('/', function (req, res) {
 
 // task - create /movies API
 //  /movies
-app.get('/movies', function (req, res) {
-  res.send(movies)
-})
+// app.get('/movies', function (req, res) {
+//   res.send(movies);
+// })
 
 //  get specific movie based on id
 app.get('/movies/:id', function (req, res) {
@@ -25,6 +25,14 @@ app.get('/movies/:id', function (req, res) {
   console.log(id);
   const movie = movies.find(m => m.id === id);
   movie ? res.send(movie) : res.status(404).send({ msg: "movie not found" });
+})
+
+
+// filtering movies based on rating
+app.get('/movies', function (req, res) {
+  const { rating } = req.query;
+  const movie = movies.filter(m => m.rating == rating);
+  rating ? res.send(movie) : res.send(movies);
 })
 
 
