@@ -99,27 +99,63 @@ app.get('/', function (req, res) {
 //   res.send(movies);
 // })
 
+app.get('/movies', async function (req, res) {
+  let filter = req.query;
+  if (filter.rating) {
+    filter.rating = +filter.rating;
+  }
+  console.log(filter);
+  const allMovies = await client
+    .db("b29we")
+    .collection("movies")
+    .find(req.query)        //find return cursor -> pagination
+    .toArray();      // converts the cursor into an array of data 
+  res.send(allMovies);
+})
+
+
 //  get specific movie based on id
 app.get('/movies/:id', async function (req, res) {
   const { id } = req.params;
   // console.log(id);
   // db.movies.findOne({id:"104"})
-
   const movie = await client.db("b29we").collection("movies").findOne({ id: id });
   console.log(movie);
-
   movie ? res.send(movie) : res.status(404).send({ msg: "movie not found" });
 })
+
+
+// delete movie based on id
+app.delete('/movies/:id', async function (req, res) {
+  const { id } = req.params;
+  // console.log(id);
+  // db.movies.deleteOne({id:"104"})
+  const result = await client.db("b29we").collection("movies").deleteOne({ id: id });
+  console.log(result);
+  result ? res.send(result) : res.status(404).send({ msg: "movie not found" });
+})
+
+
+//  UPDATE specific movie based on id
+app.put('/movies/:id', async function (req, res) {
+  const { id } = req.params;
+  const updateData = req.body;
+  console.log(id, updateData);
+
+  // db.movies.updateOne({ id: "104" }, { $set: updateData })
+
+  const result = await client.db("b29we").collection("movies").updateOne({ id: id }, { $set: updateData });
+  result ? res.send(result) : res.status(404).send({ msg: "movie not found" });
+})
+
+
 
 // express.json() - middleware(inbuilt)
 app.post('/movies', async function (req, res) {
   const newMovies = req.body;
   console.log(newMovies);
-
   // db.movies.insertMany(movies),
-
   const result = await client.db("b29we").collection("movies").insertMany(newMovies);
-
   res.send(result);
 })
 
@@ -143,22 +179,4 @@ app.listen(PORT, () => console.log(`Started server at ${PORT} 😎`));
 
 
 
-
-// filtering movies based on rating
-// app.get('/movies', function (req, res) {
-//   const { rating } = req.params;
-//   console.log(req.query);
-//   const movie = movies.filter((mv) => mv.rating == rating)
-//   rating ? res.send(rating) : res.status(404).send({ msg: "not found" });
-//   res.send(movies)
-// })
-
-
-//finding a specific movie
-// app.get('/movies/:id', function (req, res) {
-//   const { id } = req.params;
-//   // console.log(id);
-//   const movie = movies.find((mv) => mv.id == id)
-//   movie ? res.send(movie) : res.status(404).send({ msg: "not found" });
-// })
 
