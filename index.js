@@ -8,7 +8,7 @@ dotenv.config();
 
 const app = express();
 
-const PORT = 4000;
+const PORT = process.env.PORT;
 
 // const MONGO_URL = "mongodb://localhost";
 // const MONGO_URL = "mongodb+srv://b29we_first:firstdata@cluster0.hywut.mongodb.net";
