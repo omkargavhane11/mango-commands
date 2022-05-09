@@ -2,6 +2,7 @@
 import express from "express";
 import { MongoClient } from "mongodb";
 import dotenv from "dotenv";
+import cors from "cors";
 
 dotenv.config();
 // console.log(process.env);
@@ -26,6 +27,8 @@ const client = await createConnection();
 // app.use - applies - middleware to all requests
 app.use(express.json());
 
+// cors is a third party middleware
+app.use(cors());
 
 
 const movies = [
