@@ -4,6 +4,7 @@ import { MongoClient } from "mongodb";
 import dotenv from "dotenv";
 import cors from "cors";
 import { moviesRouter } from "./routes/movies.js";
+import { genPassword } from './routes/helper.js'
 
 dotenv.config();
 // console.log(process.env);
@@ -33,11 +34,11 @@ app.use(cors());
 
 
 
-
-
 app.get('/', function (req, res) {
   res.send('Hello World 😉 😎')
 })
+
+
 
 // movies -> router(different file)
 app.use('/movies', moviesRouter)
@@ -47,6 +48,8 @@ app.listen(PORT, () => console.log(`Started server at ${PORT} 😎`));
 
 
 
+
+console.log(await genPassword('password@123'));
 
 
 

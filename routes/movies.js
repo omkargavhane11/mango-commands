@@ -1,5 +1,5 @@
 import express from "express";
-import { client } from "../index.js";
+import { getMovieByRating, getMovieById, deleteMovieById, updateMovieById, createMovie } from "./helper.js";
 
 const router = express.Router();
 
@@ -15,11 +15,7 @@ router.get('/', async function (req, res) {
         filter.rating = +filter.rating;
     }
     console.log(filter);
-    const allMovies = await client
-        .db("b29we")
-        .collection("movies")
-        .find(req.query)        //find return cursor -> pagination
-        .toArray();      // converts the cursor into an array of data 
+    const allMovies = await getMovieByRating(req);      // converts the cursor into an array of data 
     res.send(allMovies);
 })
 
@@ -29,7 +25,7 @@ router.get('/:id', async function (req, res) {
     const { id } = req.params;
     // console.log(id);
     // db.movies.findOne({id:"104"})
-    const movie = await client.db("b29we").collection("movies").findOne({ id: id });
+    const movie = await getMovieById(id);
     console.log(movie);
     movie ? res.send(movie) : res.status(404).send({ msg: "movie not found" });
 })
@@ -40,7 +36,7 @@ router.delete('/:id', async function (req, res) {
     const { id } = req.params;
     // console.log(id);
     // db.movies.deleteOne({id:"104"})
-    const result = await client.db("b29we").collection("movies").deleteOne({ id: id });
+    const result = await deleteMovieById(id);
     console.log(result);
     result ? res.send(result) : res.status(404).send({ msg: "movie not found" });
 })
@@ -54,7 +50,7 @@ router.put('/:id', async function (req, res) {
 
     // db.movies.updateOne({ id: "104" }, { $set: updateData })
 
-    const result = await client.db("b29we").collection("movies").updateOne({ id: id }, { $set: updateData });
+    const result = await updateMovieById(id, updateData);
     result ? res.send(result) : res.status(404).send({ msg: "movie not found" });
 })
 
@@ -65,9 +61,12 @@ router.post('/', async function (req, res) {
     const newMovies = req.body;
     console.log(newMovies);
     // db.movies.insertMany(movies),
-    const result = await client.db("b29we").collection("movies").insertMany(newMovies);
+    const result = await createMovie(newMovies);
     res.send(result);
 })
 
 
 export const moviesRouter = router;
+
+
+
