@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 import { moviesRouter } from "./routes/movies.js";
 import { genPassword } from './routes/helper.js'
+import { usersRouter } from "./routes/users.js";
 
 dotenv.config();
 // console.log(process.env);
@@ -41,7 +42,9 @@ app.get('/', function (req, res) {
 
 
 // movies -> router(different file)
-app.use('/movies', moviesRouter)
+app.use('/movies', moviesRouter);
+// users -> router(different file)
+app.use('/users', usersRouter);
 
 app.listen(PORT, () => console.log(`Started server at ${PORT} 😎`));
 
@@ -49,7 +52,7 @@ app.listen(PORT, () => console.log(`Started server at ${PORT} 😎`));
 
 
 
-console.log(await genPassword('password@123'));
+// console.log(await genPassword('password@123'));
 
 
 
