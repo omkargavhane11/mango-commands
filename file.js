@@ -1,5 +1,4 @@
 const fs = require("fs");
-const { arrayBuffer } = require("stream/consumers");
 
 // Create a file and data to it ✅
 // fs.writeFile
@@ -19,9 +18,9 @@ const { arrayBuffer } = require("stream/consumers");
 // ...
 // text-10.html
 
-// const quote2 = "Live more, worry less"; 
-// for(let i=1;i<11;i++){
-//     fs.writeFile(`./backup/text-${i}.html`,quote2, (err) => {
+// const quote2 = "Live more, worry less";
+// for (let i = 1; i < 11; i++) {
+//     fs.writeFile(`./backup/text-${i}.html`, quote2, (err) => {
 //         console.log(`Completed writing text-${i}.html`);
 //     })
 // }

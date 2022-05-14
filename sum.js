@@ -1,5 +1,6 @@
 const sum = (n1, n2) => n1 + n2;
-console.log(process.argv);
+
+// console.log(process.argv);
 
 // // To directly the result
 // // console.log(sum(10,20));
