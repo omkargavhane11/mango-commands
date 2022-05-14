@@ -34,6 +34,8 @@ export async function getMovieByRating(req) {
         .toArray();
 }
 
+
+
 export async function genPassword(password) {
     const NO_OF_ROUNDS = 10;
     const salt = await bcrypt.genSalt(NO_OF_ROUNDS);
